@@ -47,11 +47,12 @@ class C51Agent:
         self.target_model = None
 
         # Performance Statistics
+        self.ep_cum_reward = 0
         self.stats_window_size = 5  # window size for computing rolling statistics
+        self.mavg_life = []  # Moving Average of Survival Time
+        self.var_life = []  # Variance of Survival Time
         self.mavg_score = []  # Moving Average of Survival Time
         self.var_score = []  # Variance of Survival Time
-        self.mavg_ammo_left = []  # Moving Average of Ammo used
-        self.mavg_kill_counts = []  # Moving Average of Kill Counts
         self.real_time_plotter = PlotHistogramRT(action_size, num_atoms)
 
 
@@ -103,7 +104,7 @@ class C51Agent:
         #
         if misc['ale.lives'] < prev_misc['ale.lives']:  # Loss HEALTH
             r_t = r_t - 1
-
+        self.ep_cum_reward += r_t
         return r_t
 
     # save sample <s,a,r,s'> to the replay memory

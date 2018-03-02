@@ -8,6 +8,7 @@ from lib.c51 import C51Agent
 from lib.networks import Networks
 import sys
 
+
 def preprocessImg(img, size):
     # Cambia el orden. Al final hay 3 porque es RGB
     # It becomes (640, 480, 3)
@@ -16,6 +17,7 @@ def preprocessImg(img, size):
     img = skimage.color.rgb2gray(img)
 
     return img
+
 
 if __name__ == "__main__":
 
@@ -78,7 +80,7 @@ if __name__ == "__main__":
     life = 0
 
     # Buffer to compute rolling statistics
-    life_buffer = []
+    life_buffer, score_buffer = [], []
 
     while not is_done:
 
@@ -100,13 +102,16 @@ if __name__ == "__main__":
         # print(t, reward, is_terminated, misc)
 
         if is_terminated:
+            life = t - life
             if life > max_life:
                 max_life = life
             GAME += 1
-            life_buffer.append(life)
+            life_buffer.append(max_life)
+            score_buffer.append(agent.ep_cum_reward)
             print("Episode Finish: ", t, misc)
             x_t1 = env.reset()
             misc = {'ale.lives': 5}
+            agent.ep_cum_reward = 0
             is_done = False
 
         # calcula el estado
@@ -134,7 +139,7 @@ if __name__ == "__main__":
         # save progress every 10000 iterations
         if t % 10000 == 0:
             print("Now we save model")
-            #agent.model.save_weights("models/c51_ddqn.h5", overwrite=True)
+            agent.model.save_weights("models/c51_ddqn.h5", overwrite=True)
 
         # print info
         state = ""
@@ -153,19 +158,19 @@ if __name__ == "__main__":
             # Save Agent's Performance Statistics
             if GAME % agent.stats_window_size == 0 and t > agent.observe:
                 print("Update Rolling Statistics")
-                agent.mavg_score.append(np.mean(np.array(life_buffer)))
-                agent.var_score.append(np.var(np.array(life_buffer)))
+                agent.mavg_life.append(np.mean(np.array(life_buffer)))
+                agent.var_life.append(np.var(np.array(life_buffer)))
+                agent.mavg_score.append(np.mean(np.array(score_buffer)))
+                agent.var_score.append(np.var(np.array(score_buffer)))
 
                 # Reset rolling stats buffer
-                life_buffer = []
+                life_buffer, score_buffer = [], []
 
                 # Write Rolling Statistics to file
                 with open("statistics/c51_ddqn_stats.txt", "w") as stats_file:
                     stats_file.write('Game: ' + str(GAME) + '\n')
                     stats_file.write('Max Score: ' + str(max_life) + '\n')
+                    stats_file.write('mavg_life: ' + str(agent.mavg_life) + '\n')
+                    stats_file.write('var_life: ' + str(agent.var_life) + '\n')
                     stats_file.write('mavg_score: ' + str(agent.mavg_score) + '\n')
                     stats_file.write('var_score: ' + str(agent.var_score) + '\n')
-
-
-
-
