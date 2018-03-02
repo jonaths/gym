@@ -106,7 +106,7 @@ if __name__ == "__main__":
             if life > max_life:
                 max_life = life
             GAME += 1
-            life_buffer.append(max_life)
+            life_buffer.append(life)
             score_buffer.append(agent.ep_cum_reward)
             print("Episode Finish: ", t, misc)
             x_t1 = env.reset()
@@ -152,7 +152,7 @@ if __name__ == "__main__":
 
         if is_terminated:
             print("TIME", t, "/ GAME", GAME, "/ STATE", state, \
-                  "/ EPSILON", agent.epsilon, "/ ACTION", action_idx, "/ REWARD", r_t, \
+                  "/ EPSILON", agent.epsilon, "/ ACTION", action_idx, "/ REWARD", score_buffer[-1], \
                   "/ LIFE", max_life, "/ LOSS", loss)
 
             # Save Agent's Performance Statistics
