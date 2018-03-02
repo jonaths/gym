@@ -21,7 +21,7 @@ class C51Agent:
         self.gamma = 0.99
         self.learning_rate = 0.0001
         self.epsilon = 1
-        self.initial_epsilon = 0.2
+        self.initial_epsilon = 1.0
         self.final_epsilon = 0.0001
         self.batch_size = 32
         # self.observe = 2000
