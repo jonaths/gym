@@ -1,0 +1,4 @@
+Game: 5
+Max Score: 0
+mavg_score: [0.0]
+var_score: [0.0]

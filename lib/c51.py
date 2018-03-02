@@ -25,16 +25,16 @@ class C51Agent:
         self.final_epsilon = 0.0001
         self.batch_size = 32
         # self.observe = 2000
-        self.observe = 5
+        self.observe = 2000
         self.explore = 50000
         self.frame_per_action = 4
         self.update_target_freq = 3000
-        self.timestep_per_train = 1000  # Number of timesteps between training interval
+        self.timestep_per_train = 100  # Number of timesteps between training interval
 
         # Initialize Atoms
         self.num_atoms = num_atoms  # 51 for C51
-        self.v_max = 30  # Max possible score for Defend the center is 26 - 0.1*26 = 23.4
-        self.v_min = -10  # -0.1*26 - 1 = -3.6
+        self.v_max = 300  # Max possible score for Defend the center is 26 - 0.1*26 = 23.4
+        self.v_min = -5  # -0.1*26 - 1 = -3.6
         self.delta_z = (self.v_max - self.v_min) / float(self.num_atoms - 1)
         self.z = [self.v_min + i * self.delta_z for i in range(self.num_atoms)]
 
@@ -47,7 +47,7 @@ class C51Agent:
         self.target_model = None
 
         # Performance Statistics
-        self.stats_window_size = 50  # window size for computing rolling statistics
+        self.stats_window_size = 5  # window size for computing rolling statistics
         self.mavg_score = []  # Moving Average of Survival Time
         self.var_score = []  # Variance of Survival Time
         self.mavg_ammo_left = []  # Moving Average of Ammo used
@@ -80,7 +80,7 @@ class C51Agent:
         z_concat = np.vstack(z)
 
         # plotea la distribucion
-        self.real_time_plotter.update(np.array(self.z), z_concat)
+        # self.real_time_plotter.update(np.array(self.z), z_concat)
 
         # esta multiplicacion esta en el articulo
         # es la probabilidad por el valor
@@ -101,8 +101,8 @@ class C51Agent:
         # if (misc[1] < prev_misc[1]):  # Use ammo
         #     r_t = r_t - 0.1
         #
-        # if (misc[2] < prev_misc[2]):  # Loss HEALTH
-        #     r_t = r_t - 0.1
+        if misc['ale.lives'] < prev_misc['ale.lives']:  # Loss HEALTH
+            r_t = r_t - 1
 
         return r_t
 

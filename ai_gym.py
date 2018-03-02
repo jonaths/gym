@@ -41,7 +41,7 @@ if __name__ == "__main__":
     x_t = env.reset()
     print("x_t 1")
     print(x_t.shape)
-    sys.exit(0)
+
     # Convierte en blanco y negro y reduce dimensiones
     x_t = preprocessImg(x_t, size=(img_rows, img_cols))
     print("x_t 2")
@@ -58,13 +58,13 @@ if __name__ == "__main__":
     print("configuring agent... ")
     agent = C51Agent(state_size, action_size, num_atoms)
 
-    misc = {}
+    misc = {'ale.lives': 5}
     prev_misc = misc
 
     # configure networks ------------------------------------------------------
     print("configuring networks... ")
     agent.model = Networks.value_distribution_network(state_size, num_atoms, action_size, agent.learning_rate)
-    agent.load_model("models/c51_ddqn.h5")
+    # agent.load_model("models/c51_ddqn.h5")
     agent.target_model = Networks.value_distribution_network(state_size, num_atoms, action_size, agent.learning_rate)
 
     # Reset it, returns the starting frame
@@ -95,7 +95,7 @@ if __name__ == "__main__":
         is_terminated = is_done
 
         # Render
-        env.render()
+        # env.render()
 
         # print(t, reward, is_terminated, misc)
 
@@ -106,7 +106,7 @@ if __name__ == "__main__":
             life_buffer.append(life)
             print("Episode Finish: ", t, misc)
             x_t1 = env.reset()
-            misc = {}
+            misc = {'ale.lives': 5}
             is_done = False
 
         # calcula el estado
@@ -134,39 +134,37 @@ if __name__ == "__main__":
         # save progress every 10000 iterations
         if t % 10000 == 0:
             print("Now we save model")
-            agent.model.save_weights("models/c51_ddqn.h5", overwrite=True)
+            #agent.model.save_weights("models/c51_ddqn.h5", overwrite=True)
 
-            # print info
-            state = ""
-            if t <= agent.observe:
-                state = "observe"
-            elif agent.observe < t <= agent.observe + agent.explore:
-                state = "explore"
-            else:
-                state = "train"
+        # print info
+        state = ""
+        if t <= agent.observe:
+            state = "observe"
+        elif agent.observe < t <= agent.observe + agent.explore:
+            state = "explore"
+        else:
+            state = "train"
 
-            if is_terminated:
-                print("TIME", t, "/ GAME", GAME, "/ STATE", state, \
-                      "/ EPSILON", agent.epsilon, "/ ACTION", action_idx, "/ REWARD", r_t, \
-                      "/ LIFE", max_life, "/ LOSS", loss)
+        if is_terminated:
+            print("TIME", t, "/ GAME", GAME, "/ STATE", state, \
+                  "/ EPSILON", agent.epsilon, "/ ACTION", action_idx, "/ REWARD", r_t, \
+                  "/ LIFE", max_life, "/ LOSS", loss)
 
-                # Save Agent's Performance Statistics
-                if GAME % agent.stats_window_size == 0 and t > agent.observe:
-                    print("Update Rolling Statistics")
-                    agent.mavg_score.append(np.mean(np.array(life_buffer)))
-                    agent.var_score.append(np.var(np.array(life_buffer)))
+            # Save Agent's Performance Statistics
+            if GAME % agent.stats_window_size == 0 and t > agent.observe:
+                print("Update Rolling Statistics")
+                agent.mavg_score.append(np.mean(np.array(life_buffer)))
+                agent.var_score.append(np.var(np.array(life_buffer)))
 
-                    # Reset rolling stats buffer
-                    life_buffer = []
+                # Reset rolling stats buffer
+                life_buffer = []
 
-                    # Write Rolling Statistics to file
-                    with open("statistics/c51_ddqn_stats.txt", "w") as stats_file:
-                        stats_file.write('Game: ' + str(GAME) + '\n')
-                        stats_file.write('Max Score: ' + str(max_life) + '\n')
-                        stats_file.write('mavg_score: ' + str(agent.mavg_score) + '\n')
-                        stats_file.write('var_score: ' + str(agent.var_score) + '\n')
-                        stats_file.write('mavg_ammo_left: ' + str(agent.mavg_ammo_left) + '\n')
-                        stats_file.write('mavg_kill_counts: ' + str(agent.mavg_kill_counts) + '\n')
+                # Write Rolling Statistics to file
+                with open("statistics/c51_ddqn_stats.txt", "w") as stats_file:
+                    stats_file.write('Game: ' + str(GAME) + '\n')
+                    stats_file.write('Max Score: ' + str(max_life) + '\n')
+                    stats_file.write('mavg_score: ' + str(agent.mavg_score) + '\n')
+                    stats_file.write('var_score: ' + str(agent.var_score) + '\n')
 
 
 
