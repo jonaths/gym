@@ -37,7 +37,7 @@ class PlotHistogramRT:
         plt.clf()
         plt.cla()
         for ind in range(len(new_y)):
-            plt.bar(new_x, new_y[ind], width=self.width)
+            plt.bar(new_x, new_y[ind])
         plt.draw()
         plt.pause(self.pause)
 

@@ -20,7 +20,7 @@ class C51Agent:
         # these is hyper parameters for the DQN
         self.gamma = 0.99
         self.learning_rate = 0.0001
-        self.epsilon = 1
+        self.epsilon = 1.0
         self.initial_epsilon = 1.0
         self.final_epsilon = 0.0001
         self.batch_size = 32
@@ -29,7 +29,7 @@ class C51Agent:
         self.explore = 50000
         self.frame_per_action = 4
         self.update_target_freq = 3000
-        self.timestep_per_train = 100  # Number of timesteps between training interval
+        self.timestep_per_train = 500  # Number of timesteps between training interval
 
         # Initialize Atoms
         self.num_atoms = num_atoms  # 51 for C51

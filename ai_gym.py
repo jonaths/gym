@@ -66,7 +66,7 @@ if __name__ == "__main__":
     # configure networks ------------------------------------------------------
     print("configuring networks... ")
     agent.model = Networks.value_distribution_network(state_size, num_atoms, action_size, agent.learning_rate)
-    # agent.load_model("models/c51_ddqn.h5")
+    agent.load_model("models/c51_ddqn.h5")
     agent.target_model = Networks.value_distribution_network(state_size, num_atoms, action_size, agent.learning_rate)
 
     # Reset it, returns the starting frame
@@ -97,9 +97,9 @@ if __name__ == "__main__":
         is_terminated = is_done
 
         # Render
-        # env.render()
+        env.render()
 
-        # print(t, reward, is_terminated, misc)
+        # print(t, reward, action_idx, is_terminated, misc)
 
         if is_terminated:
             life = t - life
@@ -137,7 +137,7 @@ if __name__ == "__main__":
         t += 1
 
         # save progress every 10000 iterations
-        if t % 10000 == 0:
+        if t % 2000 == 0:
             print("Now we save model")
             agent.model.save_weights("models/c51_ddqn.h5", overwrite=True)
 
