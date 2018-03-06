@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="095f8733-8375-467d-8641-142cd8aecc8f" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/models/c51_ddqn.h5" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/statistics/c51_ddqn_stats.txt" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ai_gym.py" afterPath="$PROJECT_DIR$/ai_gym.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/c51.py" afterPath="$PROJECT_DIR$/lib/c51.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -22,8 +18,8 @@
           <file leaf-file-name="ai_gym.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/ai_gym.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="454">
-                  <caret line="71" column="37" lean-forward="false" selection-start-line="71" selection-start-column="37" selection-end-line="71" selection-end-column="37" />
+                <state relative-caret-position="229">
+                  <caret line="89" column="0" lean-forward="true" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
                   <folding>
                     <element signature="e#25#35#0" expanded="true" />
                   </folding>
@@ -107,8 +103,8 @@
         <option value="$PROJECT_DIR$/statistics/c51_ddqn_stats.txt" />
         <option value="$PROJECT_DIR$/lib/plot_histogram.py" />
         <option value="$PROJECT_DIR$/tst.py" />
-        <option value="$PROJECT_DIR$/ai_gym.py" />
         <option value="$PROJECT_DIR$/lib/c51.py" />
+        <option value="$PROJECT_DIR$/ai_gym.py" />
       </list>
     </option>
   </component>
@@ -478,22 +474,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ai_gym.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="454">
-          <caret line="71" column="37" lean-forward="false" selection-start-line="71" selection-start-column="37" selection-end-line="71" selection-end-column="37" />
-          <folding>
-            <element signature="e#25#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/c51.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="676">
           <caret line="84" column="0" lean-forward="true" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
           <folding>
             <element signature="e#22#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ai_gym.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="89" column="0" lean-forward="true" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
+          <folding>
+            <element signature="e#25#35#0" expanded="true" />
           </folding>
         </state>
       </provider>

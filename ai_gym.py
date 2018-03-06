@@ -86,7 +86,7 @@ if __name__ == "__main__":
 
     while not is_done:
 
-        sleep(0.1)
+        # sleep(0.1)
 
         loss = 0
         r_t = 0
