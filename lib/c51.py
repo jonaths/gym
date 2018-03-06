@@ -20,7 +20,7 @@ class C51Agent:
         # these is hyper parameters for the DQN
         self.gamma = 0.99
         self.learning_rate = 0.0001
-        self.epsilon = 1.0
+        self.epsilon = 0.1
         self.initial_epsilon = 1.0
         self.final_epsilon = 0.0001
         self.batch_size = 32
@@ -33,8 +33,8 @@ class C51Agent:
 
         # Initialize Atoms
         self.num_atoms = num_atoms  # 51 for C51
-        self.v_max = 300  # Max possible score for Defend the center is 26 - 0.1*26 = 23.4
-        self.v_min = -5  # -0.1*26 - 1 = -3.6
+        self.v_max = 30  # Max possible score for Defend the center is 26 - 0.1*26 = 23.4
+        self.v_min = -20  # -0.1*26 - 1 = -3.6
         self.delta_z = (self.v_max - self.v_min) / float(self.num_atoms - 1)
         self.z = [self.v_min + i * self.delta_z for i in range(self.num_atoms)]
 

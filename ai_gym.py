@@ -7,6 +7,7 @@ import numpy as np
 from lib.c51 import C51Agent
 from lib.networks import Networks
 import sys
+from time import sleep
 
 
 def preprocessImg(img, size):
@@ -22,14 +23,15 @@ def preprocessImg(img, size):
 if __name__ == "__main__":
 
     # Create a breakout environment -------------------------------------------
-    env = gym.make('BreakoutDeterministic-v4')
+    # env = gym.make('BreakoutDeterministic-v4')
+    env = gym.make('Pong-v0')
 
     # configure agent ---------------------------------------------------------
     action_size = env.action_space.n
     print("=action_size")
     print(action_size)
 
-    img_rows, img_cols = 64, 64
+    img_rows, img_cols = 105, 80
     # We stack 4 frames
     img_channels = 4
 
@@ -66,7 +68,7 @@ if __name__ == "__main__":
     # configure networks ------------------------------------------------------
     print("configuring networks... ")
     agent.model = Networks.value_distribution_network(state_size, num_atoms, action_size, agent.learning_rate)
-    agent.load_model("models/c51_ddqn.h5")
+    # agent.load_model("models/c51_ddqn.h5")
     agent.target_model = Networks.value_distribution_network(state_size, num_atoms, action_size, agent.learning_rate)
 
     # Reset it, returns the starting frame
@@ -84,6 +86,8 @@ if __name__ == "__main__":
 
     while not is_done:
 
+        sleep(0.1)
+
         loss = 0
         r_t = 0
         # a_t = np.zeros([action_size])
@@ -97,7 +101,7 @@ if __name__ == "__main__":
         is_terminated = is_done
 
         # Render
-        env.render()
+        # env.render()
 
         # print(t, reward, action_idx, is_terminated, misc)
 
@@ -108,7 +112,7 @@ if __name__ == "__main__":
             GAME += 1
             life_buffer.append(life)
             score_buffer.append(agent.ep_cum_reward)
-            print("Episode Finish: ", t, misc)
+            print("Episode Finish: ", t, agent.ep_cum_reward, misc)
             x_t1 = env.reset()
             misc = {'ale.lives': 5}
             agent.ep_cum_reward = 0
@@ -137,7 +141,7 @@ if __name__ == "__main__":
         t += 1
 
         # save progress every 10000 iterations
-        if t % 2000 == 0:
+        if t % 5000 == 0:
             print("Now we save model")
             agent.model.save_weights("models/c51_ddqn.h5", overwrite=True)
 
